@@ -1,0 +1,36 @@
+<!-- templates/sidebar.html -->
+<div class="d-flex flex-column bg-light p-4 border-end shadow-sm" style="width: 240px; min-height: 100vh;">
+  <h5 class="mb-4 text-primary">Navigation</h5>
+
+  <ul class="nav flex-column">
+    <li class="nav-item mb-2">
+      <a class="nav-link fw-semibold {% if request.path == '/view-video' %}active text-primary{% else %}text-dark{% endif %}" href="/view-video">
+        View Video
+      </a>
+    </li>
+    <hr class="my-1">
+    <li class="nav-item mb-2">
+      <a class="nav-link fw-semibold {% if request.path == '/view-color' %}active text-primary{% else %}text-dark{% endif %}" href="/view-color">
+        View Color Image
+      </a>
+    </li>
+    <hr class="my-1">
+    <li class="nav-item mb-2">
+      <a class="nav-link fw-semibold {% if request.path == '/view-depth' %}active text-primary{% else %}text-dark{% endif %}" href="/view-depth">
+        View Depth Image
+      </a>
+    </li>
+    <hr class="my-1">
+    <li class="nav-item mb-2">
+      <a class="nav-link fw-semibold {% if request.path == '/view-skeleton' %}active text-primary{% else %}text-dark{% endif %}" href="/view-skeleton">
+        View Skeleton Image
+      </a>
+    </li>
+    <hr class="my-1">
+    <li class="nav-item mb-2">
+      <a class="nav-link fw-semibold {% if request.path == '/posture-browser' %}active text-primary{% else %}text-dark{% endif %}" href="/posture-browser">
+        Search Posture Numbers
+      </a>
+    </li>
+  </ul>
+</div>

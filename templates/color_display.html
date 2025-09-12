@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Color Images</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  {% include 'navbar.html' %}
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        {% include 'sidebar.html' %}
+      </div>
+
+      <div class="col-md-9">
+        <h2 class="mt-4 mb-4">Search Frames by Query Code</h2>
+
+        <form method="POST" action="{{ url_for('view_color_frames') }}" class="mb-4">
+          <div class="input-group">
+            <input type="text" name="query_code" class="form-control" placeholder="Enter query code..." value="{{ query_code }}" required>
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+        </form>
+
+        {% if error %}
+          <div class="alert alert-danger">{{ error }}</div>
+        {% elif grouped_frames %}
+          {% for dancer, dancer_frames in grouped_frames.items() %}
+            <div class="mb-5">
+              <h4 class="text-success">{{ dancer }}</h4>
+              <div class="row">
+                {% for frame in dancer_frames %}
+                  <div class="col-md-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                      <img src="{{ url_for('serve_image', encoded_path=frame.file_path) }}" class="card-img-top" alt="Frame {{ frame.frame_number }}">
+                      <div class="card-body">
+                        <h6 class="card-title">Frame {{ frame.frame_number }}</h6>
+                        <p class="card-text"><small>{{ frame.frame_type }}</small></p>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
