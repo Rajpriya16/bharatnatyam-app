@@ -21,9 +21,9 @@
 
         <form method="POST" action="{{ url_for('search_video') }}" class="mb-4">
         <div class="mb-3">
-        <label for="dancetype" class="form-label">Dance Type</label>
+        <label for="dancetype" class="form-label">Adavu</label>
         <select class="form-select" name="dancetype" required>
-            <option value="" disabled selected>Select a dance form</option>
+            <option value="" disabled selected>Select a Adavu</option>
             {% for index, name in dance_types.items() %}
             <option value="{{ name }}">{{ name|capitalize }}</option>
             {% endfor %}
@@ -31,9 +31,9 @@
         </div>
 
         <div class="mb-3">
-        <label for="sequence_id" class="form-label">Sequence Number</label>
+        <label for="sequence_id" class="form-label">Variant Number</label>
         <select class="form-select" name="sequence_id" id="sequence_id" required>
-            <option value="" disabled selected>Select a sequence</option>
+            <option value="" disabled selected>Select a variant</option>
         </select>
         </div>
 

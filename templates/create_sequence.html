@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Sequence</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .posture {
+      position: relative;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+    .posture:hover {
+      transform: scale(1.05);
+    }
+    .posture.selected {
+      border-color: #6a0dad;
+    }
+    .order-number {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #6a0dad;
+      color: white;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  {% include 'navbar.html' %}
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        {% include 'sidebar.html' %}
+      </div>
+
+      <div class="col-md-9">
+        <h2 class="mt-4 mb-4 text-center">Create Your Custom Sequence</h2>
+
+        <form method="POST" class="mb-4">
+          <div class="input-group mb-3">
+            <input type="text" name="sequence_name" class="form-control" placeholder="Enter sequence name" required>
+            <button type="submit" class="btn btn-primary">Save Sequence</button>
+          </div>
+
+          <div class="row">
+            {% for pid, code, path in postures %}
+              <div class="col-md-3 mb-4">
+                <div class="card posture h-100 shadow-sm" data-id="{{ pid }}" onclick="toggleSelect(this)">
+                  <img src="{{ url_for('serve_image', encoded_path=encode_path(path)) }}" class="card-img-top" alt="Posture {{ code }}">
+                  <div class="order-number"></div>
+                  <div class="card-body text-center">
+                    <h6 class="card-title">Posture: {{ code.split('P')[-1] }}</h6>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div id="hidden_inputs"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selected = [];
+
+    function toggleSelect(el) {
+      const id = el.getAttribute('data-id');
+      const index = selected.indexOf(id);
+
+      if (index === -1) {
+        selected.push(id);
+        el.classList.add('selected');
+      } else {
+        selected.splice(index, 1);
+        el.classList.remove('selected');
+      }
+
+      document.querySelectorAll('.posture').forEach(post => {
+        const pid = post.getAttribute('data-id');
+        const orderLabel = post.querySelector('.order-number');
+        const pos = selected.indexOf(pid);
+        if (pos !== -1) {
+          orderLabel.style.display = 'block';
+          orderLabel.textContent = pos + 1;
+        } else {
+          orderLabel.style.display = 'none';
+        }
+      });
+
+      const hiddenContainer = document.getElementById('hidden_inputs');
+      hiddenContainer.innerHTML = '';
+      selected.forEach((pid, index) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'posture_ids[]';
+        input.value = pid;
+        hiddenContainer.appendChild(input);
+      });
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dance Video Comparison</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 40px;
+        }
+        .container {
+            max-width: 700px;
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .btn-primary {
+            width: 100%;
+            border-radius: 10px;
+            padding: 12px;
+        }
+        .result-box {
+            text-align: center;
+            margin-top: 25px;
+            background: #f1f5ff;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .feedback {
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        video {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🎭 Compare Dance Videos</h2>
+    <form action="/compare-videos" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label class="form-label">Reference Dance Video:</label>
+            <input class="form-control" type="file" name="reference_video" accept="video/*" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Your Dance Video:</label>
+            <input class="form-control" type="file" name="user_video" accept="video/*" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Compare Videos</button>
+    </form>
+
+    {% if similarity %}
+    <div class="result-box">
+        <h4>Average Skeletal Similarity: {{ similarity }}%</h4>
+
+        {% if similarity > 85 %}
+            <p class="feedback text-success">🌟 Excellent posture match! Very high alignment with reference.</p>
+        {% elif similarity > 70 %}
+            <p class="feedback text-warning">👍 Good alignment, but minor deviations detected in movement or limb position.</p>
+        {% else %}
+            <p class="feedback text-danger">⚠️ Needs improvement — consider refining timing and posture accuracy.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

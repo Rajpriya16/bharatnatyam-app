@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dance Slideshow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  {% include 'navbar.html' %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        {% include 'sidebar.html' %}
+      </div>
+      <div class="col-md-9">
+        <h2 class="mt-4 mb-4">View Dance Frames</h2>
+
+        <form method="POST" class="mb-4">
+          <div class="row">
+            <div class="col-md-4">
+              <label class="form-label">Adavu</label>
+              <select name="dance_form" class="form-select" onchange="this.form.submit()">
+                <option value="">Select</option>
+                {% for id, name in dance_forms %}
+                  <option value="{{ id }}" {% if selected_dance == id|string %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Variant Number</label>
+              <select name="sequence_number" class="form-select" {% if not sequences %}disabled{% endif %}>
+                <option value="">Select</option>
+                {% for seq in sequences %}
+                  <option value="{{ seq }}" {% if selected_sequence == seq|string %}selected{% endif %}>{{ seq }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Dancer</label>
+              <select name="dancer" class="form-select">
+                <option value="">Select</option>
+                {% for id, name in dancers %}
+                  <option value="{{ id }}" {% if selected_dancer == id|string %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary mt-3">Show Slideshow</button>
+        </form>
+
+        {% if images %}
+          <h4 class="mt-5">Slideshow</h4>
+          <div id="carouselExample" class="carousel slide mt-3" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              {% for img in images %}
+                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                  <img src="{{ url_for('serve_image', encoded_path=img) }}" class="d-block mx-auto" style="max-height: 400px; width: auto;" alt="Frame {{ loop.index }}">
+                  <div class="text-center mt-2">
+                    <small class="text-muted">{{ img | b64decode }}</small>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(1);"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(1);"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

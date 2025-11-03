@@ -32,5 +32,53 @@
         Search Posture Numbers
       </a>
     </li>
+    <hr class="my-1">
+    <li class="nav-item mb-2">
+      <a class="nav-link fw-semibold {% if request.path == '/create-sequence' %}active text-primary{% else %}text-dark{% endif %}" href="/create-sequence">
+        Create Sequence
+      </a>
+    </li>
+    <hr class="my-1">
+    <li class="nav-item mb-2">
+      <a class="nav-link fw-semibold {% if request.path == '/my-sequences' %}active text-primary{% else %}text-dark{% endif %}" href="/my-sequences">
+        My Sequences
+      </a>
+    </li>
+    <hr class="my-1">
+    <li class="nav-item mb-2">
+      <a class="nav-link fw-semibold {% if request.path == '/upload-posture' %}active text-primary{% else %}text-dark{% endif %}" href="/upload-posture">
+        Check Posture Accuracy
+      </a>
+    </li>
+    <hr class="my-1">
+    <li class="nav-item mb-2">
+      <a class="nav-link fw-semibold {% if request.path == '/upload-video' %}active text-primary{% else %}text-dark{% endif %}" href="/upload-video">
+        Posture Detection
+      </a>
+    </li>
+    <hr class="my-1">
+    <li class="nav-item mb-2">
+      <a class="nav-link fw-semibold {% if request.path == '/dance-slideshow' %}active text-primary{% else %}text-dark{% endif %}" href="/dance-slideshow">
+        Dance Slideshow
+      </a>
+    </li>
+    <hr class="my-1">
+    <li class="nav-item mb-2">
+      <a class="nav-link fw-semibold {% if request.path == '/submit-public-image' %}active text-primary{% else %}text-dark{% endif %}" href="/submit-public-image">
+        Upload Public Image
+      </a>
+    </li>
+    <hr class="my-1">
+    <li class="nav-item mb-2">
+      <a class="nav-link fw-semibold {% if request.path == '/public-gallery' %}active text-primary{% else %}text-dark{% endif %}" href="/public-gallery">
+        Public Gallery
+      </a>
+    </li>
+    <hr class="my-1">
+    <li class="nav-item mb-2">
+      <a class="nav-link fw-semibold {% if request.path == '/skeletal-visualization' %}active text-primary{% else %}text-dark{% endif %}" href="/skeletal-visualization">
+        Motion Path Visualization
+      </a>
+    </li>
   </ul>
 </div>

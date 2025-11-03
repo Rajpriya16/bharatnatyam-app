@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Public Gallery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  {% include 'navbar.html' %}
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        {% include 'sidebar.html' %}
+      </div>
+
+      <div class="col-md-9">
+        <h2 class="mt-4 mb-4">Public Gallery</h2>
+
+        {% if images %}
+          <div class="row">
+            {% for img in images %}
+              <div class="col-md-3 mb-4">
+                <div class="card h-100 shadow-sm">
+                  <img src="{{ url_for('serve_image', encoded_path=img.path) }}" class="card-img-top" alt="Public Image">
+                  <div class="card-body">
+                    <p class="card-text">{{ img.caption }}</p>
+                    <small class="text-muted">Uploaded by {{ img.username }}</small><br>
+                    <small class="text-muted">Approved on {{ img.approved_at.strftime('%Y-%m-%d') }}</small>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="alert alert-info">No public images yet.</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

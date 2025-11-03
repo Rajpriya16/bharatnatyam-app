@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Posture Detection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  {% include 'navbar.html' %}
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        {% include 'sidebar.html' %}
+      </div>
+
+      <div class="col-md-9">
+        <h2 class="mt-4 mb-4">Automatic Posture Detection</h2>
+
+        <form method="POST" enctype="multipart/form-data" class="mb-4">
+          <input type="file" name="video" accept="video/*" class="form-control mb-3" required>
+          <button type="submit" class="btn btn-primary">Upload Video</button>
+        </form>
+
+        {% if matches %}
+          <h4 class="mt-5">Detected Postures</h4>
+          <div class="row mt-3">
+            {% for match in matches %}
+              <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                  <div class="row g-0">
+                    <div class="col-md-6 text-center">
+                      <img src="{{ url_for('serve_image', encoded_path=match.frame_path) }}" class="img-fluid" alt="Frame {{ match.frame }}" style="max-height: 250px; object-fit: contain;">
+                      <div class="mt-2"><small>Video Frame {{ match.frame }}</small></div>
+                    </div>
+                    <div class="col-md-6 text-center">
+                      <img src="{{ url_for('serve_image', encoded_path=match.path) }}" class="img-fluid" alt="Posture {{ match.code }}" style="max-height: 250px; object-fit: contain;">
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <strong>Matched Posture:</strong> {{ match.code.split('P')[-1] }}<br>
+                    <strong>Similarity:</strong> {{ match.similarity }}%
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

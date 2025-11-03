@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit a Public Image</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  {% include 'navbar.html' %}
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        {% include 'sidebar.html' %}
+      </div>
+
+      <div class="col-md-9">
+        <h2 class="mt-4 mb-4">Submit a Public Image</h2>
+
+        {% if message %}
+          <div class="alert alert-success">{{ message }}</div>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data" class="mb-4">
+          <div class="mb-3">
+            <label class="form-label">Select Image</label>
+            <input type="file" name="image" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Caption (optional)</label>
+            <input type="text" name="caption" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit for Approval</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
